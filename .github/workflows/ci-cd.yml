@@ -47,8 +47,8 @@ jobs:
       # Deploy the application to Kubernetes
       - name: Deploy to Kubernetes
         run: |
-          kubectl apply -f deployment.yaml
-          kubectl apply -f service.yaml
+          kubectl apply -f kubernet/deployment.yaml
+          kubectl apply -f kubernet/service.yaml
 
       # Verify the pod status
       - name: Check pod status
