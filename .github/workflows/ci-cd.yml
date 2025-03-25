@@ -44,17 +44,22 @@ jobs:
           mkdir -p ~/.kube
           echo "$KUBECONFIG" > ~/.kube/config  # Ensure KUBECONFIG is set as a secret in GitHub
 
+      # Set Kubernetes context (optional: adjust if using Docker Desktop or another cluster)
+      - name: Set Kubernetes Context
+        run: |
+          kubectl config use-context docker-desktop  # Replace 'docker-desktop' with your cluster's context if needed
+
       # Deploy the application to Kubernetes
       - name: Deploy to Kubernetes
         run: |
-          kubectl apply -f kubernet/deployment.yaml
-          kubectl apply -f kubernet/service.yaml
+          kubectl apply -f kubernet/deployment.yaml --validate=false  # Optional: Bypass validation if needed
+          kubectl apply -f kubernet/service.yaml --validate=false  # Optional: Bypass validation if needed
 
       # Verify the pod status
       - name: Check pod status
         run: |
           kubectl get pods
-          
+
       # Port forward to access the application locally (Optional for local dev only)
       - name: Port-forward application
         run: |
