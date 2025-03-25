@@ -38,10 +38,11 @@ jobs:
         with:
           kubectl-version: 'latest'
 
-      # Set up Docker Desktop Kubernetes context
-      - name: Set up Docker Desktop Kubernetes context
+      # Configure Kubeconfig using GitHub secrets (must be set up beforehand)
+      - name: Set up Kubeconfig
         run: |
-          kubectl config use-context docker-desktop
+          mkdir -p ~/.kube
+          echo "$KUBECONFIG" > ~/.kube/config  # Ensure KUBECONFIG is set as a secret in GitHub
 
       # Deploy the application to Kubernetes
       - name: Deploy to Kubernetes
